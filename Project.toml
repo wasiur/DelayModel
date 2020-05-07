@@ -1,4 +1,4 @@
-name = "delay_pde"
+name = "DelayModel"
 uuid = "c543be35-e09e-46c3-b2d3-cbde98f13496"
 version = "0.1.0"
 author = ["Wasiur KhudaBukhsh <khudabukhsh.2@osu.edu>"]
