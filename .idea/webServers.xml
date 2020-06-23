@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="8acbf766-6be0-48aa-9007-05ff71521c6f" name="Pitzer">
+        <fileTransfer accessType="SFTP" host="pitzer.osc.edu" port="22" sshConfigId="11d22cbe-4e29-4560-b55d-745c294fe0b5" sshConfig="osu10689@pitzer.osc.edu:22 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

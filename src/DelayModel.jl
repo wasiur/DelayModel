@@ -12,14 +12,13 @@
 julia>
 ```
 """
-using Revise
-
 
 module DelayModel
     using Random
     using Distributions
     using StatsBase
     using DataFrames
+
 
     hazard_function(d, t) = Distributions.pdf(d,t)/(1 - Distributions.cdf(d,t))
     survival_function(d, t) = 1 - Distributions.cdf(d,t)
@@ -35,6 +34,30 @@ module DelayModel
         end
         return idx
     end
+
+    function hazard_survival(dist)
+        nReaction = size(dist,1)
+        r = Array{Any}(nothing,nReaction)
+        surv = Array{Any}(nothing, nReaction)
+        for i in 1:nReaction
+            r[i] = t -> DelayModel.hazard_function(dist[i],t)
+            surv[i] = t -> DelayModel.survival_function(dist[i],t)
+        end
+        return r, surv
+    end
+
+
+    function str2parm(s, sep=",")
+        res = replace(s, "[" => "")
+        res = replace(res, "]" => "")
+        res = split(res, sep)
+        return parse.(Float64, res)
+    end
+
+    function distparm2str(s)
+        res = replace(s, "[" => "")
+        res = replace(res, "]" => "")
+        res = replace(res, "," => "_")
+        return res
+    end
 end
-
-
