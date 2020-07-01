@@ -46,9 +46,9 @@ end
 
 function plot_hazards(r , t = 0.0:0.1:10.0)
     pl = plot(t,r[1].(t), color=cyans[3], linewidth=4,
-              label="b", line=:dashdot, marker=:o, alpha=0.5, grid=false, legend=:best)
+              label="b", line=:dashdot,  alpha=0.5, grid=false, legend=:bottomright)
     plot!(t,r[2].(t), color=purplybrown[5], linewidth=5, label=L"\tau", line=:solid)
-    plot!(t,r[3].(t), color=reds[3], linewidth=4, label="d", line=:dash, marker=:*)
+    plot!(t,r[3].(t), color=reds[3], linewidth=4, label="d", line=:dash)
     xlabel!("Time")
     ylabel!("Hazard functions")
     return pl
@@ -79,7 +79,7 @@ function main()
     output_mtrx= [1 0; 0 1; 0 0]
 
     d = Array{Any}(nothing, nReaction)
-    d[1] = Exponential(5.50)
+    d[1] = Exponential(2.50)
     d[2] = GeneralizedExtremeValue(1.25/0.30,1.250,0.30)
     d[3] = Gamma(2.5, 1.75)
 
@@ -119,6 +119,7 @@ function main()
     ylabel!("Concentration")
     savefig(limit_plot, "plots/model1_lln.pdf")
     savefig(limit_plot, "plots/model1_lln.svg")
+    # savefig(limit_plot, "plots/model1_lln.eps")
     if parsed_args["backend"] == "PGFPlotsX"
         savefig(limit_plot, "plots/model1_lln.tikz")
     end
@@ -126,7 +127,7 @@ function main()
 
     fname = "combined_model1_lln"
     l = @layout [a{0.5w} b{0.5w}]
-    pl3 = plot(pl, limit_plot, layout = l, size=(600, 250))
+    pl3 = plot(pl, limit_plot, layout = l, size=(800, 350))
     # plot!(size=(12,7.5))
     savefig(pl3, "plots/" * fname * ".pdf")
     savefig(pl3, "plots/" * fname * ".svg")

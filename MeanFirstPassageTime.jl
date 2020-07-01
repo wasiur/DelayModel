@@ -77,9 +77,9 @@ end
 
 function plot_hazards(r , t = 0.0:0.1:10.0)
     pl = plot(t,r[1].(t), color=cyans[3], linewidth=4,
-              label="b", line=:dashdot, marker=:o, alpha=0.5, grid=false, legend=:best)
+              label="b", line=:dashdot, alpha=0.5, grid=false, legend=:topleft)
     plot!(t,r[2].(t), color=purplybrown[5], linewidth=5, label=L"\tau", line=:solid)
-    plot!(t,r[3].(t), color=reds[3], linewidth=4, label="d", line=:dash, marker=:*)
+    plot!(t,r[3].(t), color=reds[3], linewidth=4, label="d", line=:dash)
     xlabel!("Time")
     ylabel!("Hazard functions")
     return pl
@@ -213,11 +213,19 @@ function main()
     # ylabel!("Density")
 
 
-    pl2 = density(fpts, density=true, fillrange = 0, fillalpha = 0.25, fillcolor = browns[1], color=browns[1], linewidth=4.0, grid=false, label="Simulated FPTs", legend=:best)
-    density!(fpts_theo, density=true, line=:dash, fillrange = 0, fillalpha = 0.25, fillcolor = cyans[1], color=cyans[3], linewidth=2.5, grid=false, label="Approximate FPTs")
-    vline!([theo_t1], color=reds[5], linewidth=3.5,  label="Theoretical MFPT")
+    # pl2 = density(fpts, density=true, fillrange = 0, fillalpha = 0.25, fillcolor = browns[1], color=browns[1], linewidth=4.0, grid=false, label="FPTs", legend=:best)
+    # density!(fpts_theo, density=true, line=:dash, fillrange = 0, fillalpha = 0.25, fillcolor = cyans[1], color=cyans[3], linewidth=2.5, grid=false, label="Approximate FPTs")
+    # # vline!([theo_t1], color=reds[5], linewidth=3.5,  label="Theoretical MFPT")
+    # xlabel!("First passage time")
+    # ylabel!("Density")
+    # xlims!(0,0.04)
+
+    pl2 = histogram(fpts, density=true, color=browns[1], alpha=0.25, linewidth=0.25, grid=false, label="FPTs", legend=:best)
+    histogram!(fpts_theo, density=true, color=cyans[3], alpha=0.25, linewidth=0.25, grid=false, label="Approximate FPTs")
+    # vline!([theo_t1], color=reds[5], linewidth=3.5,  label="Theoretical MFPT")
     xlabel!("First passage time")
     ylabel!("Density")
+    xlims!(0,0.04)
 
     fname = "mfpt_" * conv_dist_name * "_" * DelayModel.distparm2str(conv_dist_parms) * "_" * death_dist_name * "_" * DelayModel.distparm2str(death_dist_parms) * "_N" * string(n)
     savefig(pl2, "plots/" * fname * ".pdf")
@@ -232,7 +240,7 @@ function main()
 
     fname = "combined_mfpt_" * conv_dist_name * "_" * DelayModel.distparm2str(conv_dist_parms) * "_" * death_dist_name * "_" * DelayModel.distparm2str(death_dist_parms) * "_N" * string(n)
     l = @layout [a{0.5w} b{0.5w}]
-    pl3 = plot(pl1, pl2, layout = l, size=(600, 275))
+    pl3 = plot(pl1, pl2, layout = l, size=(800, 350))
     # plot!(size=(12,7.5))
     savefig(pl3, "plots/" * fname * ".pdf")
     savefig(pl3, "plots/" * fname * ".svg")
